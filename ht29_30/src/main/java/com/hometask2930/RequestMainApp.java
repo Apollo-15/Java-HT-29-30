@@ -15,9 +15,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class RequestMainApp {
     public static void main( String[] args ) throws JsonProcessingException{
-        String apiUrl = "https://jsonplaceholder.typicode.com/posts";
+        String apiUrl = "https://jsonplaceholder.typicode.com/todos/1";
 
-        RequestBody body = new RequestBody("foo", "bar", 1);
+        RequestBody body = new RequestBody(1, 1, "delectus aut autem", false);
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonInput = objectMapper.writeValueAsString(body);
         
@@ -28,11 +28,6 @@ public class RequestMainApp {
             connection.setRequestProperty("Content-type", "application/json; utf-8");
             connection.setRequestProperty("Accept", "application/json");
             connection.setDoOutput(true);
-            try(OutputStream outputStream = connection.getOutputStream()){
-                byte[] input = jsonInput.getBytes();
-                outputStream.write(input);
-                outputStream.flush();
-            }
 
             int responseCode = connection.getResponseCode();
             System.out.println("Response code: " + responseCode);
