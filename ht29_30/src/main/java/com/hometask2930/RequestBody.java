@@ -1,38 +1,67 @@
 package com.hometask2930;
 
 public class RequestBody {
+    private int userId;
+    private int id; 
     private String title;
     private String body;
-    private int userid;
 
-    public RequestBody(String title, String body, int userid) {
-        this.title = title;
-        this.body = body;
-        this.userid = userid;
+    public RequestBody() {
     }
+
+    
+    
+    public int getUserId() {
+        return userId;
+    }
+
+
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+
+
+    public int getId() {
+        return id;
+    }
+
+
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
 
     public String getTitle() {
         return title;
     }
 
+
+
     public void setTitle(String title) {
         this.title = title;
     }
+
+
 
     public String getBody() {
         return body;
     }
 
+
+
     public void setBody(String body) {
         this.body = body;
     }
 
-    public int getUserid() {
-        return userid;
-    }
 
-    public void setUserid(int userid) {
-        this.userid = userid;
+
+    @Override
+    public String toString() {
+        return "RequestBody [userId=" + userId + ", id=" + id + ", title=" + title + ", body=" + body + "]";
     }
 
     

@@ -2,7 +2,6 @@ package com.hometask2930;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -15,27 +14,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class RequestMainApp {
     public static void main( String[] args ) throws JsonProcessingException{
-        String apiUrl = "https://jsonplaceholder.typicode.com/posts";
+        String apiUrl = "https://jsonplaceholder.typicode.com/posts/1";
 
-        RequestBody body = new RequestBody("foo", "bar", 1);
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonInput = objectMapper.writeValueAsString(body);
         
         try {
             URL url = new URL(apiUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
             connection.setRequestMethod("GET");
-            connection.setRequestProperty("Content-type", "application/json; utf-8");
             connection.setRequestProperty("Accept", "application/json");
-            connection.setDoOutput(true);
-            try(OutputStream outputStream = connection.getOutputStream()){
-                byte[] input = jsonInput.getBytes();
-                outputStream.write(input);
-                outputStream.flush();
-            }
 
             int responseCode = connection.getResponseCode();
             System.out.println("Response code: " + responseCode);
+
             if(responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED){
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
                     StringBuilder response = new StringBuilder();
@@ -43,8 +35,12 @@ public class RequestMainApp {
                     while((line = reader.readLine()) != null){
                         response.append(line).append("\n");
                     }
-                    System.out.println("Response from typicode server");
+
+                    System.out.println("Response from typicode server:");
                     System.out.println(response.toString());
+
+                    System.out.println("Parsed response:");
+                    System.out.println(objectMapper.readValue(response.toString(), RequestBody.class));
                 }
             }
 
@@ -55,26 +51,3 @@ public class RequestMainApp {
         
     }
 }
-// String apiUrl = "https://jsonplaceholder.typicode.com/posts/1";
-//    try {
-//      URL url = new URL(apiUrl);
-//      HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//      connection.setRequestMethod("GET");
-//      connection.setConnectTimeout(5000);
-
-//      int responseCode = connection.getResponseCode();
-//      if (responseCode == HttpURLConnection.HTTP_OK){
-//          BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-//          StringBuilder response = new StringBuilder();
-//          String line;
-//          while((line = reader.readLine()) != null){
-//              response.append(line).append("\n");
-//          }
-//          reader.close();
-
-//          System.out.println("Response from typicode server");
-//          System.out.println(response.toString());
-//      }
-//    } catch (Exception e) {
-//         e.printStackTrace();
-//    }
