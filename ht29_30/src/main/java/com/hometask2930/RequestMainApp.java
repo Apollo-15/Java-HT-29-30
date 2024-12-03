@@ -15,6 +15,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class RequestMainApp {
     public static void main( String[] args ) throws JsonProcessingException{
         String apiUrl = "https://jsonplaceholder.typicode.com/posts/1";
+        StockMarket stockMarket = new StockMarketImpl();
+
+        StockObserver investor1 = new Investor("Alice");
+        StockObserver investor2 = new Investor("Bob");
+
+        stockMarket.registerObserver(investor1);
+        stockMarket.registerObserver(investor2);
 
         ObjectMapper objectMapper = new ObjectMapper();
         
@@ -40,6 +47,9 @@ public class RequestMainApp {
                     System.out.println(response.toString());
 
                     System.out.println("Parsed response:");
+                    System.out.println(objectMapper.readValue(response.toString(), RequestBody.class));
+
+                    System.out.println("Parsed Inverstors:");
                     System.out.println(objectMapper.readValue(response.toString(), RequestBody.class));
                 }
             }
