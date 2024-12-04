@@ -9,6 +9,6 @@ public class Investor implements StockObserver {
 
     @Override
     public void update(RequestBody requestBody) {
-        System.out.println("Я " + name + " отримав "+ requestBody);
+        System.out.println("Я " + name + " отримав "+ requestBody + "\n");
     }
 }

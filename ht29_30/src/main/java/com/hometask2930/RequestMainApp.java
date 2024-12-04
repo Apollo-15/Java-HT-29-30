@@ -46,11 +46,13 @@ public class RequestMainApp {
                     System.out.println("Response from typicode server:");
                     System.out.println(response.toString());
 
-                    System.out.println("Parsed response:");
+                    System.out.println("Parsed response:" + "\n");
                     System.out.println(objectMapper.readValue(response.toString(), RequestBody.class));
+                    
+                    System.out.println("\n");
 
-                    System.out.println("Parsed Inverstors:");
-                    System.out.println(objectMapper.readValue(response.toString(), RequestBody.class));
+                    System.out.println("Parsed Inverstors:" + "\n");
+                    stockMarket.notifyObservers(objectMapper.readValue(response.toString(), RequestBody.class));
                 }
             }
 
